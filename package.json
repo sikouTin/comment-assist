@@ -3,15 +3,15 @@
   "displayName": "Comment Assist",
   "description": "A plugin that automatically adds start and end comments for ADD, UPDATE, and DELETE operations.",
   "version": "1.0.0",
-  "publisher": "HTJN",
+  "publisher": "tinsikou",
   "author": {
-    "name": "陳志恒",
+    "name": "tinsikou",
     "email": "tinsikou@gmail.com"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sikoutin/CommentAssist.git"
+    "url": "https://github.com/sikouTin/comment-assist.git"
   },
   "engines": {
     "vscode": "^1.88.0"
