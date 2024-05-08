@@ -1,0 +1,92 @@
+{
+  "name": "comment-assist",
+  "displayName": "Comment Assist",
+  "description": "A plugin that automatically adds start and end comments for ADD, UPDATE, and DELETE operations.",
+  "version": "1.0.0",
+  "publisher": "Zhiheng Chen",
+  "author": {
+    "name": "陳志恒",
+    "email": "tinsikou@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sikoutin/CommentAssist.git"
+  },
+  "engines": {
+    "vscode": "^1.88.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "CommentAssist",
+      "properties": {
+        "CommentAssist.keyword1": {
+          "type": "string",
+          "default": "システム試験障害001",
+          "description": "Keyword 1. If you want to set system date here, input \"now\" "
+        },
+        "CommentAssist.keyword2": {
+          "type": "string",
+          "default": "HTJN陳",
+          "description": "Keyword 2. If you want to set system date here, input \"now\" "
+        },
+        "CommentAssist.keyword3": {
+          "type": "string",
+          "default": "now",
+          "description": "Keyword 3. If you want to set system date here, input \"now\" "
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.commentAdd",
+        "title": "addComment"
+      },
+      {
+        "command": "extension.commentUpd",
+        "title": "updateComment"
+      },
+      {
+        "command": "extension.commentDel",
+        "title": "deleteComment"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.commentAdd",
+        "key": "alt+a",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.commentUpd",
+        "key": "alt+s",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.commentDel",
+        "key": "alt+d",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.88.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "@vscode/test-cli": "^0.0.8",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
