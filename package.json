@@ -3,9 +3,9 @@
   "displayName": "Comment Assist",
   "description": "A plugin that automatically adds start and end comments for ADD, UPDATE, and DELETE operations.",
   "version": "1.0.0",
-  "publisher": "tinsikou",
+  "publisher": "ChenZhiheng",
   "author": {
-    "name": "tinsikou",
+    "name": "ChenZhiheng",
     "email": "tinsikou@gmail.com"
   },
   "license": "MIT",
