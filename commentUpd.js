@@ -81,9 +81,9 @@ async function addComment(editor, fileExtension, selectedText) {
     // 获取当前光标位置
     let position = editor.selection.active;
     // 获取当前光标所在行的内容
-    let line = editor.document.lineAt(position.line);
-    // 将光标移动到添加的空白行上
-    let newPosition = position.with(position.line + lines.length + 1, line.text.length);
+    let line = editor.document.lineAt(position.line - 1);
+    // 将光标移动到光标行的上一行的行末
+    let newPosition = position.with(position.line - 1, line.text.length);
     let newSelection = new vscode.Selection(newPosition, newPosition);
     editor.selection = newSelection;
 }
