@@ -3,7 +3,7 @@
   "displayName": "Comment Assist",
   "description": "A plugin that automatically adds start and end comments for ADD, UPDATE, and DELETE operations.",
   "version": "1.0.0",
-  "publisher": "Zhiheng Chen",
+  "publisher": "HTJN",
   "author": {
     "name": "陳志恒",
     "email": "tinsikou@gmail.com"
