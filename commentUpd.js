@@ -39,17 +39,18 @@ async function addComment(editor, fileExtension, selectedText) {
         // 对选中的多行文本进行遍历,在每一行开头添加注释和缩进
         for (let i = 0; i < lines.length; i++) {
             let lineText = trimEnd(lines[i]);
-            // 检查是否已经是注释行
-            if (!lineText.trim().startsWith('//')) {
-                commentText += `${lineIndent}// ${lineText}\n`;
+            // 如果已经是注释行
+            if (lineText.trim().startsWith('//')) {
+                // 删除开头的 //
+               let result = lineText.trim().replace(/^\/\//, '');
+               // 如果 // 后面有一个或多个空格,从第二位开始截取全部
+               if (result.startsWith(' ')) {
+                   result = result.slice(1);
+               }
+               commentText += `${lineIndent}// ${lineIndent}${result}\n`;
+            // 如果不是注释行
             } else {
-                 // 删除开头的 //
-                let result = lineText.trim().replace(/^\/\//, '');
-                // 如果 // 后面有一个或多个空格,从第二位开始截取全部
-                if (result.startsWith(' ')) {
-                    result = result.slice(1);
-                }
-                commentText += `${lineIndent}// ${lineIndent}${result}\n`;
+                commentText += `${lineIndent}// ${lineText}\n`;
             }
         }
         commentText = `${lineIndent}// ▼ ${global.keyword1}${global.keyword2}${global.keyword3}UPDATE START\n${commentText}${selectedText}\n${lineIndent}// ▲ ${global.keyword1}${global.keyword2}${global.keyword3}UPDATE END`;
@@ -57,17 +58,22 @@ async function addComment(editor, fileExtension, selectedText) {
         // 对选中的多行文本进行遍历,在每一行开头添加注释和缩进
         for (let i = 0; i < lines.length; i++) {
             let lineText = trimEnd(lines[i]);
-            // 检查是否已经是注释行
-            if (!lineText.trim().startsWith('//')) {
-                commentText += `${lineIndent}// ${lineText}\n`;
-            } else {
-                 // 删除开头的 //
-                let result = lineText.trim().replace(/^\/\//, '');
-                // 如果 // 后面有一个或多个空格,从第二位开始截取全部
+            // 如果已经是注释行
+            if (lineText.trim().startsWith('<!--')) {
+                // 删除开头的 <!--
+                let result = lineText.trim().replace(/^<!--/, '');
+
+                // 如果 <!-- 后面有一个或多个空格,从第二位开始截取全部
                 if (result.startsWith(' ')) {
                     result = result.slice(1);
                 }
-                commentText += `${lineIndent}// ${lineIndent}${result}\n`;
+                // 删除末尾的 -->
+                result = result.replace(/\s*-->$/, '');
+                result = trimEnd(result);
+                commentText += `${lineIndent}<!-- ${lineIndent}${result} -->\n`;
+            // 如果不是注释行
+            }else {
+                commentText += `${lineIndent}<!-- ${lineText} -->\n`;
             }
         }
         commentText = `${lineIndent}<!-- ▼ ${global.keyword1}${global.keyword2}${global.keyword3}UPDATE START -->\n${commentText}${selectedText}\n${lineIndent}<!-- ▲ ${global.keyword1}${global.keyword2}${global.keyword3}UPDATE END -->`;
