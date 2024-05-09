@@ -14,7 +14,7 @@
     "url": "https://github.com/sikouTin/comment-assist.git"
   },
   "engines": {
-    "vscode": "^1.88.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Other"
@@ -81,7 +81,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.88.0",
+    "@types/vscode": "^1.80.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
     "eslint": "^8.57.0",
