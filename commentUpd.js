@@ -39,44 +39,34 @@ async function addComment(editor, fileExtension, selectedText) {
         // 对选中的多行文本进行遍历,在每一行开头添加注释和缩进
         for (let i = 0; i < lines.length; i++) {
             let lineText = trimEnd(lines[i]);
-            // 如果已经是注释行
-            if (lineText.trim().startsWith('//')) {
-                // 删除开头的 //
-               let result = lineText.trim().replace(/^\/\//, '');
-               // 如果 // 后面有一个或多个空格,从第二位开始截取全部
-               if (result.startsWith(' ')) {
-                   result = result.slice(1);
-               }
-               commentText += `${lineIndent}// ${lineIndent}${result}\n`;
-            // 如果不是注释行
-            } else {
-                commentText += `${lineIndent}// ${lineText}\n`;
-            }
+            // // 如果已经是注释行
+            // if (lineText.trim().startsWith('//')) {
+            // // 将注释提到文字列的最前方
+            // commentText += `${lineIndent}${transformCommentTs(lineText)}\n`;
+            // // 如果不是注释行
+            // } else {
+            //     commentText += `${lineIndent}// ${lineText}\n`;
+            // }
+            commentText += `${lineIndent}// ${lineText}\n`;
         }
-        commentText = `${lineIndent}// ▼ ${global.keyword1}${global.keyword2}${global.keyword3}UPDATE START\n${commentText}${selectedText}\n${lineIndent}// ▲ ${global.keyword1}${global.keyword2}${global.keyword3}UPDATE END`;
+        commentText = `${lineIndent}// ▼ ${global.keyword1}${global.keyword2}${global.keyword3}DELETE START\n${commentText}${selectedText}\n${lineIndent}// ▲ ${global.keyword1}${global.keyword2}${global.keyword3}DELETE END`;
     } else {
         // 对选中的多行文本进行遍历,在每一行开头添加注释和缩进
         for (let i = 0; i < lines.length; i++) {
             let lineText = trimEnd(lines[i]);
+            // 删除末尾的 -->
+            lineText = lineText.replace(/\s*-->$/, '');
+            lineText = trimEnd(lineText);
             // 如果已经是注释行
             if (lineText.trim().startsWith('<!--')) {
-                // 删除开头的 <!--
-                let result = lineText.trim().replace(/^<!--/, '');
-
-                // 如果 <!-- 后面有一个或多个空格,从第二位开始截取全部
-                if (result.startsWith(' ')) {
-                    result = result.slice(1);
-                }
-                // 删除末尾的 -->
-                result = result.replace(/\s*-->$/, '');
-                result = trimEnd(result);
-                commentText += `${lineIndent}<!-- ${lineIndent}${result} -->\n`;
+                // 将注释提到文字列的最前方
+                commentText += `${lineIndent}${transformCommentHtml(lineText)} -->\n`;
             // 如果不是注释行
             }else {
                 commentText += `${lineIndent}<!-- ${lineText} -->\n`;
             }
         }
-        commentText = `${lineIndent}<!-- ▼ ${global.keyword1}${global.keyword2}${global.keyword3}UPDATE START -->\n${commentText}${selectedText}\n${lineIndent}<!-- ▲ ${global.keyword1}${global.keyword2}${global.keyword3}UPDATE END -->`;
+        commentText = `${lineIndent}<!-- ▼ ${global.keyword1}${global.keyword2}${global.keyword3}DELETE START -->\n${commentText}${selectedText}\n${lineIndent}<!-- ▲ ${global.keyword1}${global.keyword2}${global.keyword3}DELETE END -->`;
     }
 
     // 插入注释内容
@@ -108,5 +98,35 @@ function getActiveEditorFileExtension() {
 // 去掉末尾的换行符和空白
 function trimEnd(str) {
     return str.replace(/[\s\n]+$/, '');
-  }
+}
+
+// // 将注释符提到文字列的最前方
+// function transformCommentTs(comment) {
+//     // 使用正则表达式匹配注释的空格或制表符
+//     const match = comment.match(/^(\s*)(\/\/)/);
+//     if (match) {
+//         const spaces = match[1] || ''; // 获取空格或制表符
+//         const commentText = match[2]; // 获取注释文本
+
+//         // 将空格或制表符移动到注释后面
+//         return `${commentText}${spaces}${comment.substring(match[0].length)}`;
+//     } else {
+//         // 如果注释没有空格或制表符，则返回原始注释
+//         return comment;
+//     }
+// }
+function transformCommentHtml(comment) {
+    // 使用正则表达式匹配注释的空格或制表符
+    const match = comment.match(/^(\s*)(<!--)/);
+    if (match) {
+        const spaces = match[1] || ''; // 获取空格或制表符
+        const commentText = match[2]; // 获取注释文本
+
+        // 将空格或制表符移动到注释后面
+        return `${commentText}${spaces}${comment.substring(match[0].length)}`;
+    } else {
+        // 如果注释没有空格或制表符，则返回原始注释
+        return comment;
+    }
+}
 module.exports = updateComment;
